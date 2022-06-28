@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es6", "dom"],
+    "baseUrl": ".",
+    "jsx": "preserve",
+    "module": "esnext",
+    "strict": false,
+    "outDir": "dist",
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "strictNullChecks": false,
+    "noFallthroughCasesInSwitch": true,
+    "useUnknownInCatchVariables": false,
+    "incremental": true,
+    "noEmit": false,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "paths": {
+      "client/*": ["src/*"],
+      "server/*": ["server/*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+/**
+ * @author BounceCode, Inc.
+ * @packageDocumentation
+ */
+
+import jwt, { JwtPayload } from 'jsonwebtoken';
+
+/**
+ * 사용자정보를 인증하기 위한 파일입니다.
+ * {@link expressApp} 에서 요청을 실행하기 전에 사용됩니다.
+ *
+ * @author BounceCode, Inc.
+ */
+export const parseAuthHeader = async (authHeader = '') => {
+  try {
+    const token = authHeader.replace(/Bearer /i, '');
+    const jwtObj = await jwt.verify(token, process.env.MRLOGIN_PUBLIC_KEY);
+    if (jwtObj.sub === 'access_token') return jwtObj as JwtPayload;
+  } catch (e) {}
+  return null;
+};

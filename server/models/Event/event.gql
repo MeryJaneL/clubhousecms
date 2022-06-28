@@ -1,0 +1,7 @@
+mutation CreateEvent($data: EventCreateInput!) {
+  createEvent(data: $data)
+}
+
+mutation EventSetLoggingCompleted($where: EventUniqueOneInput!) {
+  eventSetLoggingCompleted(where: $where)
+}

@@ -1,0 +1,22 @@
+mutation UpdateUser($data: UserUpdateInput!) {
+  updateUser(data: $data)
+}
+
+query UserMe {
+  userMe {
+    email
+    walletAddress
+    nickname
+    instaAddress
+    homepageAddress
+    urlAddress
+    backgroundImage
+    profileImage
+    provider
+    verifyEmail
+  }
+}
+
+mutation CreateUser($data: UserCreateInput!) {
+  createUser(data: $data)
+}

@@ -1,0 +1,137 @@
+@startuml dtxerd
+
+object "관리자 : admin_entity" as admin_entity {
+  아이디 : id <<generated>>  (number) (not null) (unique)
+  --
+  유저아이디 : userId (FK) (string) (not null)
+  --
+  생성시간 : createdDate (date) (not null)
+  수정시간 : updatedDate (date) (not null)
+  삭제시간 : deletedDate (date) (nullable)
+}
+
+object "유저 : user_entity" as user_entity {
+  아이디 : id <<generated>> (number) (not null) (unique)
+  --
+  유저아이디 : userId (string) (not null) (unique)
+  프로필이미지 : prifileImage (string) (nullable)
+  닉네임 : nickname (string) (nullable)
+  --
+  생성시간 : createdDate (date) (not null)
+  수정시간 : updatedDate (date) (not null)
+  삭제시간 : deletedDate (date) (nullable)
+}
+
+object "지갑 : wallet_entity" as wallet_entity {
+  아이디 : id <<generated>> (number) (not null) (unique)
+  --
+  유저아이디 : userId (FK) (string) (not null)
+  --
+  네트워크 : network (string) (not null)
+  지갑주소 : walletAddress (string) (not null)  
+  --
+  생성시간 : createdDate (date) (not null)
+  수정시간 : updatedDate (date) (not null)
+  삭제시간 : deletedDate (date) (nullable)
+}
+
+object "게시판 : board_categoty_entity" as board_categoty_entity {
+  아이디 : id <<generated>> (number) (not null) (unique)
+  --
+  게시판이름 : name (string) (not null)
+  카테고리 : category (string) (not null)
+  --
+  생성시간 : createdDate (date) (not null)
+  수정시간 : updatedDate (date) (not null)
+  삭제시간 : deletedDate (date) (nullable)
+}
+
+object "게시글 : board_post_entity" as board_post_entity {
+  아이디 : id <<generated>> (number) (not null) (unique)
+  --
+  유저아이디 : userId (string) (FK) (not null)
+  (게시판)아이디 : categoryId (number) (FK) (not null)
+  --
+  제목 : title (string) (not null)
+  내용 : content (string(html)) (not null)
+  조회수 : views number (default 0) (not null)
+  공지사항여부 : isNotice (boolean) (default false) (not null)
+  --
+  생성시간 : createdDate (date) (not null)
+  수정시간 : updatedDate (date) (not null)
+  삭제시간 : deletedDate (date) (nullable)
+}
+
+object "게시글좋아요 : board_post_favorite_entity" as board_post_favorite_entity {
+  아이디 : id <<generated>>  (number) (not null) (unique)
+  --
+  유저아이디 : userId (string) (FK) (not null)
+  (게시글)아이디 : postId (number) (FK) (not null)
+  --
+  생성시간 : createdDate (date) (not null)
+  수정시간 : updatedDate (date) (not null)
+  삭제시간 : deletedDate (date) (nullable)
+}
+
+object "게시글신고 : board_post_report_entity" as board_post_report_entity {
+  아이디 : id <<generated>>  (number) (not null) (unique)
+  --
+  유저아이디 : userId (string) (FK) (not null)
+  (게시글)아이디 : postId (number) (FK) (not null)
+  --
+  신고사유 : reasons (JSON) (not null)
+  --
+  생성시간 : createdDate (date) (not null)
+  수정시간 : updatedDate (date) (not null)
+  삭제시간 : deletedDate (date) (nullable)
+}
+
+object "게시글댓글 : board_comment_entity" as board_comment_entity {
+  아이디 : id <<generated>>  (number) (not null) (unique)
+  --
+  유저아이디 : userId (string) (FK) (not null)
+  (게시글)아이디 : postId (number) (FK) (not null)
+  --  
+  내용 : content string (not null)
+  깊이 : depth number(default start 1) (1~2) (not null)
+  --
+  생성시간 : createdDate (date) (not null)
+  수정시간 : updatedDate (date) (not null)
+  삭제시간 : deletedDate (date) (nullable)
+}
+
+object "댓글신고 : board_comment_report_entity" as board_comment_report_entity {
+  아이디 : id <<generated>>  (number) (not null) (unique)
+  --
+  유저아이디 : userId (string) (FK) (not null)
+  (게시글댓글)아이디 : commentId (number) (FK) (not null)
+  --
+  신고사유 : reasons (JSON) (not null)
+  --  
+  생성시간 : createdDate (date) (not null)
+  수정시간 : updatedDate (date) (not null)
+  삭제시간 : deletedDate (date) (nullable)
+}
+
+admin_entity |o..|| user_entity
+user_entity ||..o{ board_post_entity
+board_categoty_entity ||..o{ board_post_entity
+board_post_entity ||..o{ board_post_favorite_entity
+board_post_entity ||..o{ board_post_report_entity
+board_post_entity ||..o{ board_comment_entity
+board_comment_entity ||..o{ board_comment_report_entity
+user_entity ||..o{ board_post_favorite_entity
+user_entity ||..o{ board_post_report_entity
+user_entity ||..o{ board_comment_entity
+user_entity ||..o{ board_comment_report_entity
+user_entity ||..o{ wallet_entity
+
+
+' hospital_entity ||..o{ doctor_entity
+' doctor_entity ||..o{ patient_entity
+' patient_entity ||..o{ patient_daily_record_entity
+' patient_entity ||..o{ inqury_entity
+' patient_entity ||..o{ survey_entity
+' patient_daily_record_entity ||..o{ patient_panic_attack_entity
+' patient_daily_record_entity ||..o| patient_diary_entity
+@enduml

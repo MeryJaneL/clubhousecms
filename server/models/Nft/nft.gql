@@ -1,0 +1,31 @@
+mutation CreateNft($data: NftCreateInput!) {
+  createNft(data: $data)
+}
+
+query NftListCount {
+  nftListCount
+}
+
+query NftList($skip: Int, $take: Int) {
+  nftList(skip: $skip, take: $take) {
+    name
+    image
+    description
+    category
+    tokenId
+    tokenURI
+    user {
+      email
+      walletAddress
+      nickname
+      sex
+      introduceText
+      birthDate
+      urlAddress
+      backgroundImage
+      profileImage
+      provider
+      verifyEmail
+    }
+  }
+}
